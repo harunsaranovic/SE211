@@ -9,9 +9,6 @@ public class Window{
 		private static final int WIDTH = 600;
 		private static final int HEIGHT = 500;
 		static JFrame frame = new JFrame("Sudoku Solver");
-		JLabel txt = new JLabel("UNDER CONSTRUCTION!");
-		JTextField txtPath = new JTextField(" ", 20);
-		JTextField destinationPath = new JTextField(" Destinacija za excel file", 20);
 		JPanel panel = new JPanel();
 		JButton checkStart = new JButton("Check");
 		JTextArea errors = new JTextArea("Errors:");
@@ -48,14 +45,9 @@ public class Window{
 			    }
 			} 
 		});
-		
 
-			//public void actionPerformed(KeyEvent e) {
-			    
-			//} 
 		
 		
-
 		errors.setBounds(385, 150, 180, 190);
 		errors.setEditable(false);
 		
@@ -89,8 +81,14 @@ public class Window{
 		checker(group8, 4, 7);
 		checker(group9, 7, 7);
 		
-		if(errors.getText().length() == 7)
+		if(checkIsDuplicate()) {
+			errors.setText(errors.getText() + "\nDuplicate number in the\nsame row/column");
+		}
+		
+		if(errors.getText().length() == 7) {
 			checkStart.setText("Start");
+			lockFields();
+		}
 		else
 			checkStart.setText("Check");
 	}
@@ -101,7 +99,7 @@ public class Window{
 			for(int j = 0; j < 3; j++) {
 				
 				if(group.field[j][i].getText().length() > 1) {
-					errors.setText(errors.getText() + "\nField " + (i+x) + "x" + (j+y) + " must be 1 decimal length");
+					errors.setText(errors.getText() + "\nField " + (i+x) + "x" + (j+y) + " must be 1 decimal\nlength");
 				}
 				else if(group.field[j][i].getText().equals("0")) {
 					errors.setText(errors.getText() + "\nField " + (i+x) + "x" + (j+y) + " cannot be 0");
@@ -113,8 +111,85 @@ public class Window{
 				}
 				
 			}
-		}	
+		}		
+	}
+	
+	/**
+	 * Function for checking if there is duplicate number in the same row, column or group
+	 * 
+	 * @return true if there is a same number in the same row, column or group
+	 */
+	private boolean checkIsDuplicate() {
 		
+		//Group checker
+		if(group1.isDuplicateInGroup())
+			return true;
+		if(group2.isDuplicateInGroup())
+			return true;
+		if(group3.isDuplicateInGroup())
+			return true;
+		if(group4.isDuplicateInGroup())
+			return true;
+		if(group5.isDuplicateInGroup())
+			return true;
+		if(group6.isDuplicateInGroup())
+			return true;
+		if(group7.isDuplicateInGroup())
+			return true;
+		if(group8.isDuplicateInGroup())
+			return true;
+		if(group9.isDuplicateInGroup())
+			return true;
+		
+		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				for(int k=0; k < 3; k++) {
+
+					//Horizontal checker
+					if(group1.field[k][i].getText().equals(group2.field[k][j].getText()) && !group1.field[k][i].getText().equals(""))
+						return true;
+					if(group1.field[k][i].getText().equals(group3.field[k][j].getText()) && !group1.field[k][i].getText().equals(""))
+						return true;
+					if(group2.field[k][i].getText().equals(group3.field[k][j].getText()) && !group2.field[k][i].getText().equals(""))
+						return true;
+					if(group4.field[k][i].getText().equals(group5.field[k][j].getText()) && !group4.field[k][i].getText().equals(""))
+						return true;
+					if(group4.field[k][i].getText().equals(group6.field[k][j].getText()) && !group4.field[k][i].getText().equals(""))
+						return true;
+					if(group5.field[k][i].getText().equals(group6.field[k][j].getText()) && !group5.field[k][i].getText().equals(""))
+						return true;
+					if(group7.field[k][i].getText().equals(group8.field[k][j].getText()) && !group7.field[k][i].getText().equals(""))
+						return true;
+					if(group7.field[k][i].getText().equals(group9.field[k][j].getText()) && !group7.field[k][i].getText().equals(""))
+						return true;
+					if(group8.field[k][i].getText().equals(group9.field[k][j].getText()) && !group8.field[k][i].getText().equals(""))
+						return true;
+					
+					//Vertical checker
+					if(group1.field[i][k].getText().equals(group4.field[j][k].getText()) && !group1.field[i][k].getText().equals(""))
+						return true;
+					if(group1.field[i][k].getText().equals(group7.field[j][k].getText()) && !group1.field[i][k].getText().equals(""))
+						return true;
+					if(group4.field[i][k].getText().equals(group7.field[j][k].getText()) && !group4.field[i][k].getText().equals(""))
+						return true;
+					if(group2.field[i][k].getText().equals(group5.field[j][k].getText()) && !group2.field[i][k].getText().equals(""))
+						return true;
+					if(group2.field[i][k].getText().equals(group8.field[j][k].getText()) && !group2.field[i][k].getText().equals(""))
+						return true;
+					if(group5.field[i][k].getText().equals(group8.field[j][k].getText()) && !group5.field[i][k].getText().equals(""))
+						return true;
+					if(group3.field[i][k].getText().equals(group6.field[j][k].getText()) && !group3.field[i][k].getText().equals(""))
+						return true;
+					if(group3.field[i][k].getText().equals(group9.field[j][k].getText()) && !group3.field[i][k].getText().equals(""))
+						return true;
+					if(group6.field[i][k].getText().equals(group9.field[j][k].getText()) && !group6.field[i][k].getText().equals(""))
+						return true;					
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	private void lockFields() {
@@ -136,16 +211,240 @@ public class Window{
 	
 	private void startSolving() {
 		
-		int[][][] x = new int[9][9][9];
-		
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) {
-				for(int k = 0; k < 9; k++) {
-					x[i][j][k] = 0;
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				
+				/*Removing possible values in other fields based on
+				**on values in group1
+				*/
+				if(!group1.field[i][j].equals("")) {
+					
+					String stringToRemove = group1.field[i][j].getText();
+					//group1.possibleValues[i][j].values.clear();
+					//group1.possibleValues[i][j].values.add(stringToRemove);
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group1.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group2.possibleValues[i][f].values.remove(stringToRemove);
+						group3.possibleValues[i][f].values.remove(stringToRemove);
+						group4.possibleValues[f][j].values.remove(stringToRemove);
+						group7.possibleValues[f][j].values.remove(stringToRemove);
+					}					
 				}
+				
+				/*Removing possible values in other fields based on
+				**on values in group2
+				*/
+				if(!group2.field[i][j].equals("")) {
+					
+					String stringToRemove = group2.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group2.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group1.possibleValues[i][f].values.remove(stringToRemove);
+						group3.possibleValues[i][f].values.remove(stringToRemove);
+						group5.possibleValues[f][j].values.remove(stringToRemove);
+						group8.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group3
+				*/
+				if(!group3.field[i][j].equals("")) {
+					
+					String stringToRemove = group3.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group3.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group1.possibleValues[i][f].values.remove(stringToRemove);
+						group2.possibleValues[i][f].values.remove(stringToRemove);
+						group6.possibleValues[f][j].values.remove(stringToRemove);
+						group9.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group4
+				*/
+				if(!group4.field[i][j].equals("")) {
+					
+					String stringToRemove = group4.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group4.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group5.possibleValues[i][f].values.remove(stringToRemove);
+						group6.possibleValues[i][f].values.remove(stringToRemove);
+						group1.possibleValues[f][j].values.remove(stringToRemove);
+						group7.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group5
+				*/
+				if(!group5.field[i][j].equals("")) {
+					
+					String stringToRemove = group5.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group5.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group4.possibleValues[i][f].values.remove(stringToRemove);
+						group6.possibleValues[i][f].values.remove(stringToRemove);
+						group2.possibleValues[f][j].values.remove(stringToRemove);
+						group8.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group6
+				*/
+				if(!group6.field[i][j].equals("")) {
+					
+					String stringToRemove = group6.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group6.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group4.possibleValues[i][f].values.remove(stringToRemove);
+						group6.possibleValues[i][f].values.remove(stringToRemove);
+						group3.possibleValues[f][j].values.remove(stringToRemove);
+						group9.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group7
+				*/
+				if(!group7.field[i][j].equals("")) {
+					
+					String stringToRemove = group7.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group7.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group8.possibleValues[i][f].values.remove(stringToRemove);
+						group9.possibleValues[i][f].values.remove(stringToRemove);
+						group1.possibleValues[f][j].values.remove(stringToRemove);
+						group4.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group8
+				*/
+				if(!group8.field[i][j].equals("")) {
+					
+					String stringToRemove = group8.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group8.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group7.possibleValues[i][f].values.remove(stringToRemove);
+						group9.possibleValues[i][f].values.remove(stringToRemove);
+						group2.possibleValues[f][j].values.remove(stringToRemove);
+						group5.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				/*Removing possible values in other fields based
+				**on values in group7
+				*/
+				if(!group9.field[i][j].equals("")) {
+					
+					String stringToRemove = group9.field[i][j].getText();
+					
+					//deleting field value in other other fields
+					for(int m = 0; m < 3; m++) {
+						for(int n = 0; n < 3; n++) {							
+							if(i!=m || j!=n) {
+								group9.possibleValues[m][n].values.remove(stringToRemove);
+							}
+						}
+					}
+					
+					for(int f=0; f<3; f++) {
+						group7.possibleValues[i][f].values.remove(stringToRemove);
+						group9.possibleValues[i][f].values.remove(stringToRemove);
+						group3.possibleValues[f][j].values.remove(stringToRemove);
+						group6.possibleValues[f][j].values.remove(stringToRemove);
+					}					
+				}
+				
+				
 			}
 		}
 		
+		group1.printPossibleValues();
+		group2.printPossibleValues();
+		group3.printPossibleValues();
+		group4.printPossibleValues();
+		group5.printPossibleValues();
+		group6.printPossibleValues();
+		group7.printPossibleValues();
+		group8.printPossibleValues();
+		group9.printPossibleValues();
 		
 	}
 }
