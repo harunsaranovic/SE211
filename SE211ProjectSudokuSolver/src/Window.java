@@ -41,7 +41,7 @@ public class Window{
 			    	checkFields();
 			    else {
 			    	lockFields();
-			    	startSolving();
+			    	checkPossibleValues();
 			    }
 			} 
 		});
@@ -209,7 +209,10 @@ public class Window{
 		}
 	}
 	
-	private void startSolving() {
+	/**
+	 * Function for filling possible values lists
+	 */
+	private void checkPossibleValues() {
 		
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
@@ -217,11 +220,12 @@ public class Window{
 				/*Removing possible values in other fields based on
 				**on values in group1
 				*/
-				if(!group1.field[i][j].equals("")) {
+				if(!group1.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group1.field[i][j].getText();
-					//group1.possibleValues[i][j].values.clear();
-					//group1.possibleValues[i][j].values.add(stringToRemove);
+					group1.possibleValues[i][j].values.clear();
+					group1.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -243,9 +247,12 @@ public class Window{
 				/*Removing possible values in other fields based on
 				**on values in group2
 				*/
-				if(!group2.field[i][j].equals("")) {
+				if(!group2.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group2.field[i][j].getText();
+					group2.possibleValues[i][j].values.clear();
+					group2.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -267,9 +274,11 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group3
 				*/
-				if(!group3.field[i][j].equals("")) {
+				if(!group3.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group3.field[i][j].getText();
+					group3.possibleValues[i][j].values.clear();
+					group3.possibleValues[i][j].values.add(stringToRemove);				
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -291,9 +300,11 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group4
 				*/
-				if(!group4.field[i][j].equals("")) {
+				if(!group4.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group4.field[i][j].getText();
+					group4.possibleValues[i][j].values.clear();
+					group4.possibleValues[i][j].values.add(stringToRemove);
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -315,9 +326,11 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group5
 				*/
-				if(!group5.field[i][j].equals("")) {
+				if(!group5.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group5.field[i][j].getText();
+					group5.possibleValues[i][j].values.clear();
+					group5.possibleValues[i][j].values.add(stringToRemove);
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -339,9 +352,12 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group6
 				*/
-				if(!group6.field[i][j].equals("")) {
+				if(!group6.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group6.field[i][j].getText();
+					group6.possibleValues[i][j].values.clear();
+					group6.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -354,7 +370,7 @@ public class Window{
 					
 					for(int f=0; f<3; f++) {
 						group4.possibleValues[i][f].values.remove(stringToRemove);
-						group6.possibleValues[i][f].values.remove(stringToRemove);
+						group5.possibleValues[i][f].values.remove(stringToRemove);
 						group3.possibleValues[f][j].values.remove(stringToRemove);
 						group9.possibleValues[f][j].values.remove(stringToRemove);
 					}					
@@ -363,9 +379,12 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group7
 				*/
-				if(!group7.field[i][j].equals("")) {
+				if(!group7.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group7.field[i][j].getText();
+					group7.possibleValues[i][j].values.clear();
+					group7.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -387,9 +406,12 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group8
 				*/
-				if(!group8.field[i][j].equals("")) {
+				if(!group8.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group8.field[i][j].getText();
+					group8.possibleValues[i][j].values.clear();
+					group8.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -411,9 +433,12 @@ public class Window{
 				/*Removing possible values in other fields based
 				**on values in group7
 				*/
-				if(!group9.field[i][j].equals("")) {
+				if(!group9.field[i][j].getText().isEmpty()) {
 					
 					String stringToRemove = group9.field[i][j].getText();
+					group9.possibleValues[i][j].values.clear();
+					group9.possibleValues[i][j].values.add(stringToRemove);
+					
 					
 					//deleting field value in other other fields
 					for(int m = 0; m < 3; m++) {
@@ -426,7 +451,7 @@ public class Window{
 					
 					for(int f=0; f<3; f++) {
 						group7.possibleValues[i][f].values.remove(stringToRemove);
-						group9.possibleValues[i][f].values.remove(stringToRemove);
+						group8.possibleValues[i][f].values.remove(stringToRemove);
 						group3.possibleValues[f][j].values.remove(stringToRemove);
 						group6.possibleValues[f][j].values.remove(stringToRemove);
 					}					
@@ -436,15 +461,21 @@ public class Window{
 			}
 		}
 		
-		group1.printPossibleValues();
-		group2.printPossibleValues();
-		group3.printPossibleValues();
-		group4.printPossibleValues();
-		group5.printPossibleValues();
-		group6.printPossibleValues();
-		group7.printPossibleValues();
-		group8.printPossibleValues();
-		group9.printPossibleValues();
+		group1.printPossibleValues(0,0);
+		group2.printPossibleValues(0,3);
+		group3.printPossibleValues(0,6);
+		group4.printPossibleValues(3,0);
+		group5.printPossibleValues(3,3);
+		group6.printPossibleValues(3,6);
+		group7.printPossibleValues(6,0);
+		group8.printPossibleValues(6,3);
+		group9.printPossibleValues(6,6);
+		
+	}
+	
+	private void startSolving() {
+		
+		
 		
 	}
 }

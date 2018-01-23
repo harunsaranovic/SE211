@@ -52,11 +52,11 @@ public class SudokuGroup {
 		return false;
 	}
 	
-	public void printPossibleValues() {
+	public void printPossibleValues(int x, int y) {
 		
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
-				System.out.println("Possible values for field " + i + "x" + j + " : " + possibleValues[i][j].values.toString());
+				System.out.println("Possible values for field " + (j+y) + "x" + (i+x) + " : " + possibleValues[i][j].values.toString());
 			}
 		}
 	}
