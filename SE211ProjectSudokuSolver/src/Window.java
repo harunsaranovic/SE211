@@ -11,10 +11,14 @@ public class Window{
 		
 		private static final int WIDTH = 600;
 		private static final int HEIGHT = 500;
+		int groupsNo = 9;
 		static JFrame frame = new JFrame("Sudoku Solver");
 		JPanel panel = new JPanel();
 		JButton checkStart = new JButton("Check");
 		JTextArea errors = new JTextArea("Errors:");
+		JLabel howMany = new JLabel("How many groups to be solved:");
+		JLabel howManyDesc = new JLabel("*Less groups less time to be solved");
+		JTextField howManyGroups = new JTextField("9");
 		
 		//JLabels
 		SudokuGroup group1 = new SudokuGroup(50, 50, panel); 
@@ -40,32 +44,49 @@ public class Window{
 		checkStart.setFont(new Font("SansSerif", Font.BOLD, 20));
 		checkStart.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			    if(checkStart.getText().equals("Check")) {
-			    	
+				if(checkStart.getText().equals("Check")) {
 			    	checkFields();
+		    		setGroupsNo();
+				}
+			    else {
 			    	lockFields();
-			    	checkPossibleValues();			    	
+			    	checkPossibleValues();
 			    	startSolving();
 			    }
 			} 
 		});
 
-		
-		
+	
 		errors.setBounds(385, 150, 180, 190);
 		errors.setEditable(false);
+		howMany.setBounds(50, 400, 300, 20);
+		howManyDesc.setBounds(50, 416, 300, 20);
+		howManyDesc.setFont(new Font("SansSerif", Font.ITALIC, 10));
+		howManyGroups.setBounds(270, 400, 20, 20);
 		
 		panel.setLayout(null);
 		panel.setBounds(0, 0, WIDTH, HEIGHT);
 		
+		frame.add(howManyGroups);
 		frame.add(errors);
 		frame.add(checkStart);
+		frame.add(howMany);
+		frame.add(howManyDesc);
 		frame.add(panel);
 	}
 	
 	public void visible(){
 		frame.setVisible(true);
 	}
+	
+	private void setGroupsNo() {
+		if(Character.isDigit(howManyGroups.getText().charAt(0)) && howManyGroups.getText().length()==1 ) {
+			groupsNo = Integer.parseInt(howManyGroups.getText());
+			System.out.println(howManyGroups.getText());
+			System.out.println(groupsNo);
+		}
+	}
+	
 	
 	public void actionPerformed(ActionEvent e) { 
 		//TO BE BUILD	
@@ -484,8 +505,7 @@ public class Window{
 		
 		boolean ok = true;
 		
-		do{
-			
+		do{	
 			ok=true;
 			count++;
 			System.out.println(count);
@@ -495,7 +515,9 @@ public class Window{
 			group4.cloneValues();
 			group5.cloneValues();
 			group6.cloneValues();
-			//group5.cloneValues();
+			group7.cloneValues();
+			group8.cloneValues();
+			group9.cloneValues();
 			
 			for(int i=0; i<3; i++) {
 				for(int j=0; j<3; j++) {				
@@ -536,20 +558,69 @@ public class Window{
 					else
 						rand6 = rand.nextInt(group6.possibleValues[i][j].clones.size());
 					
+					int rand7=0;
+					if(group7.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand7 = rand.nextInt(group7.possibleValues[i][j].clones.size());
+					
+					int rand8=0;
+					if(group8.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand8 = rand.nextInt(group8.possibleValues[i][j].clones.size());
+					
+					int rand9=0;
+					if(group9.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand9= rand.nextInt(group9.possibleValues[i][j].clones.size());
+					
 					
 					if(ok) {
+							
 						group1.field[i][j].setText(""+group1.possibleValues[i][j].clones.get(rand1));
 						group1.removeFromClones(group1.field[i][j].getText());
+						
+						if(groupsNo>=2) {
 						group2.field[i][j].setText(""+group2.possibleValues[i][j].clones.get(rand2));
 						group2.removeFromClones(group2.field[i][j].getText());
+						}
+						
+						if(groupsNo>=3) {
 						group3.field[i][j].setText(""+group3.possibleValues[i][j].clones.get(rand3));
 						group3.removeFromClones(group3.field[i][j].getText());
+						}
+						
+						if(groupsNo>=4) {
 						group4.field[i][j].setText(""+group4.possibleValues[i][j].clones.get(rand4));
 						group4.removeFromClones(group4.field[i][j].getText());
+						}
+						
+						if(groupsNo>=5) {
 						group5.field[i][j].setText(""+group5.possibleValues[i][j].clones.get(rand5));
 						group5.removeFromClones(group5.field[i][j].getText());
-						//group6.field[i][j].setText(""+group6.possibleValues[i][j].clones.get(rand6));
-						//group6.removeFromClones(group6.field[i][j].getText());
+						}
+						
+						if(groupsNo>=6) {
+						group6.field[i][j].setText(""+group6.possibleValues[i][j].clones.get(rand6));
+						group6.removeFromClones(group6.field[i][j].getText());
+						}
+						
+						if(groupsNo>=7) {
+						group7.field[i][j].setText(""+group7.possibleValues[i][j].clones.get(rand7));
+						group7.removeFromClones(group7.field[i][j].getText());
+						}
+						
+						if(groupsNo>=8) {
+						group8.field[i][j].setText(""+group8.possibleValues[i][j].clones.get(rand8));
+						group8.removeFromClones(group8.field[i][j].getText());
+						}
+						
+						if(groupsNo>=9) {
+						group9.field[i][j].setText(""+group9.possibleValues[i][j].clones.get(rand9));
+						group9.removeFromClones(group9.field[i][j].getText());
+						}
 					}
 					
 				}
