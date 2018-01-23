@@ -60,6 +60,24 @@ public class SudokuGroup {
 			}
 		}
 	}
+	
+	public void cloneValues() {
+		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				possibleValues[i][j].cloneValues();
+			}
+		}
+	}
+	
+	public void removeFromClones(String toBeRemoved) {
+		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				possibleValues[i][j].removeFromClones(toBeRemoved);
+			}
+		}
+	}
 
 	
 	

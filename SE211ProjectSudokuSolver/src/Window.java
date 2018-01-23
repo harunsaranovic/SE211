@@ -2,6 +2,9 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class Window{
@@ -37,11 +40,12 @@ public class Window{
 		checkStart.setFont(new Font("SansSerif", Font.BOLD, 20));
 		checkStart.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			    if(checkStart.getText().equals("Check"))
+			    if(checkStart.getText().equals("Check")) {
+			    	
 			    	checkFields();
-			    else {
 			    	lockFields();
-			    	checkPossibleValues();
+			    	checkPossibleValues();			    	
+			    	startSolving();
 			    }
 			} 
 		});
@@ -475,7 +479,85 @@ public class Window{
 	
 	private void startSolving() {
 		
+		int count = 0;
+		Random rand = new Random();
 		
+		boolean ok = true;
+		
+		do{
+			
+			ok=true;
+			count++;
+			System.out.println(count);
+			group1.cloneValues();
+			group2.cloneValues();
+			group3.cloneValues();
+			group4.cloneValues();
+			group5.cloneValues();
+			group6.cloneValues();
+			//group5.cloneValues();
+			
+			for(int i=0; i<3; i++) {
+				for(int j=0; j<3; j++) {				
+					
+					int rand1=0;
+					if(group1.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand1 = rand.nextInt(group1.possibleValues[i][j].clones.size());
+					
+					int rand2=0;
+					if(group2.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand2 = rand.nextInt(group2.possibleValues[i][j].clones.size());
+					
+					int rand3=0;
+					if(group3.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else	
+						rand3 = rand.nextInt(group3.possibleValues[i][j].clones.size());
+					
+					int rand4=0;
+					if(group4.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else	
+						rand4 = rand.nextInt(group4.possibleValues[i][j].clones.size());
+					
+					int rand5=0;
+					if(group5.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand5 = rand.nextInt(group5.possibleValues[i][j].clones.size());
+					
+					int rand6=0;
+					if(group6.possibleValues[i][j].clones.size()==0)
+						ok=false;
+					else
+						rand6 = rand.nextInt(group6.possibleValues[i][j].clones.size());
+					
+					
+					if(ok) {
+						group1.field[i][j].setText(""+group1.possibleValues[i][j].clones.get(rand1));
+						group1.removeFromClones(group1.field[i][j].getText());
+						group2.field[i][j].setText(""+group2.possibleValues[i][j].clones.get(rand2));
+						group2.removeFromClones(group2.field[i][j].getText());
+						group3.field[i][j].setText(""+group3.possibleValues[i][j].clones.get(rand3));
+						group3.removeFromClones(group3.field[i][j].getText());
+						group4.field[i][j].setText(""+group4.possibleValues[i][j].clones.get(rand4));
+						group4.removeFromClones(group4.field[i][j].getText());
+						group5.field[i][j].setText(""+group5.possibleValues[i][j].clones.get(rand5));
+						group5.removeFromClones(group5.field[i][j].getText());
+						//group6.field[i][j].setText(""+group6.possibleValues[i][j].clones.get(rand6));
+						//group6.removeFromClones(group6.field[i][j].getText());
+					}
+					
+				}
+			}
+		//}while(group1.isDuplicateInGroup());
+		}while(checkIsDuplicate() || !ok);
+		System.out.println("GOTOVO");
+		//}while(false);
 		
 	}
 }
